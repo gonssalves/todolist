@@ -14,9 +14,26 @@ import jakarta.servlet.http.HttpServletResponse;
 public class FilterTaskAuth extends OncePerRequestFilter{
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
-            throws ServletException, IOException {
-        throw new UnsupportedOperationException("Unimplemented method 'doFilterInternal'");
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+        
+        System.out.println("Chegou no filter");
+        // Pegar a autenticação (usuário e senha)
+        var authorization = request.getHeader("Authorization");
+       
+
+        var user_password = authorization.substring("Basic".length()).trim();
+        System.out.println("Authorization");
+        System.out.println(user_password + "\n");
+
+        // Validar usuário
+
+        // Validar senha
+
+        // Seguir viagem
+        
+        filterChain.doFilter(request, response);     
+    
+          
     }
 
 
