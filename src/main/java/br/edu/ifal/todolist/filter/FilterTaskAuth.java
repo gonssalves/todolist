@@ -1,6 +1,7 @@
 package br.edu.ifal.todolist.filter;
 
 import java.io.IOException;
+import java.util.Base64;
 
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -17,13 +18,24 @@ public class FilterTaskAuth extends OncePerRequestFilter{
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         
         System.out.println("Chegou no filter");
+
         // Pegar a autenticação (usuário e senha)
         var authorization = request.getHeader("Authorization");
        
+        var authEncoded = authorization.substring("Basic".length()).trim();
+        
+        byte[] authDecode = Base64.getDecoder().decode(authEncoded);
+        
+        var authString = new String(authDecode);
 
-        var user_password = authorization.substring("Basic".length()).trim();
+        String[] credentials = authString.split(":");
+        String username = credentials[0];
+        String password = credentials[1];
+
         System.out.println("Authorization");
-        System.out.println(user_password + "\n");
+        System.out.println(username);
+        System.out.println(password);
+
 
         // Validar usuário
 
